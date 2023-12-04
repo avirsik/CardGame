@@ -28,7 +28,6 @@ public class Player {
         this.points += points;
     }
     public void addCard(Card c) {
-        c = new Card();
         hand.add(c);
     }
     public String toString() {

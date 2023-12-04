@@ -4,11 +4,13 @@ public class Deck {
     private ArrayList<Card> cards;
     private int cardsLeft;
     // constructor
-    public Deck(String[] rank, String[] suit, int[] points) {
+    public Deck(String[] ranks, String[] suits, int[] points) {
         this.cards = new ArrayList<Card>();
         this.cardsLeft = 0;
-        for(int i = 0; i < cards.size(); i++) {
-            cards.add(i, rank);
+        for (int i = 0; i < ranks.length; i++) {
+            for (int j = 0; j < suits.length; j++) {
+                cards.add(new Card(ranks[i], suits[j], points[i]));
+            }
         }
     }
     public boolean isEmpty() {
@@ -33,8 +35,7 @@ public class Deck {
     public void shuffle() {
         for (int i = cards.size(); i > 0; i--) {
             int r = (int)(Math.random()*i);
-            Card copy = new Card();
-            copy = cards.get(i);
+            Card copy = cards.get(i);
             cards.set(i, cards.get(r));
             cards.set(r, copy);
         }
