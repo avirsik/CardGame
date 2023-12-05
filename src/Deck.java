@@ -10,6 +10,7 @@ public class Deck {
         for (int i = 0; i < ranks.length; i++) {
             for (int j = 0; j < suits.length; j++) {
                 cards.add(new Card(ranks[i], suits[j], points[i]));
+                cardsLeft++;
             }
         }
     }
@@ -33,7 +34,7 @@ public class Deck {
     }
 
     public void shuffle() {
-        for (int i = cards.size(); i > 0; i--) {
+        for (int i = cards.size() - 1; i > 0; i--) {
             int r = (int)(Math.random()*i);
             Card copy = cards.get(i);
             cards.set(i, cards.get(r));
