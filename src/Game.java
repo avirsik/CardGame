@@ -6,11 +6,7 @@ public class Game {
     private Player computer;
     // creates player's deck
     private Deck deck;
-    // creates player's arraylist of cards
-    private ArrayList<Card> pCard[];
-    // creates computer's arraylist of cards
-    private ArrayList<Card> cCard[];
-    // player's name
+//    // player's name
     private String name;
     // constructor
     public Game() {
@@ -19,21 +15,18 @@ public class Game {
         String[] suits = {"Hearts", "Clubs", "Spades", "Diamonds"};
         int[] point = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
         this.deck = new Deck (ranks, suits, point);
+        deck.shuffle();
         // asks for user's name
         System.out.println("What is your name?");
         Scanner scan = new Scanner(System.in);
         name = scan.nextLine();
-        // initialize players
+        // initialize players + computer
         this.player = new Player(name);
+        this.computer = new Player("computer");
         // adds cards to deck
-        for(int i = 0; i < 52; i++) {
-            if (i <= 26) {
-                // gives player a hand of 26 cards
-                this.player.addCard(this.deck.deal());
-            }
-            else {
-                this.computer.addCard(this.deck.deal());
-            }
+        for(int i = 0; i < 26; i++) {
+            this.player.addCard(this.deck.deal());
+            this.computer.addCard(this.deck.deal());
         }
     }
 
@@ -43,35 +36,58 @@ public class Game {
 
     public void playGame() {
         printInstructions();
-        System.out.println("Let's Go! " + name + ", draw a card. (type 'd')");
+//      System.out.println("Let's Go! " + name + ", draw a card. (type 'd')");
         Scanner scan = new Scanner(System.in);
         // while there are things left in the deck
-        while (!this.deck.isEmpty()) {
+        while (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
+            System.out.println(name + ", draw a card. (type 'd')");
             if (!scan.nextLine().isEmpty()) {
                 // reads player's draw
-                System.out.println(pCard.getRank());
-                // remove card from arraylist
-                pCard.remove();
+                Card pCard = this.player.getHand().remove(0);
+                System.out.println("You drew: " + pCard);
                 // reads computer's draw
-                System.out.println("Computer draws:");
-                // remove card from arrayList
-                System.out.println();
-                // if player's card was higher announce they won and add to their score
-                player.addPoints(1);
-                // if computer's card was higher announce they won and add to their score
-                // if it was a tie
-                System.out.println();
+                Card cCard = this.computer.getHand().remove(0);
+                System.out.println("The computer drew: " + cCard+"\n");
+                System.out.println(greatestCard(pCard, cCard));
+                // read player + computer's points
+                System.out.println(name + "'s score: " + player.getPoints());
+                System.out.println("computer's score: " + computer.getPoints() + "\n");
             }
-            // if all the cards are used up
             else {
-                // add up the player's score and the computer's score
-                // if player won announce they won
-                // if computer won, announce they won
-                // if it was a tie, announce the tie and play another round
+                checkWon();
             }
         }
     }
 
+    // returns the card with the greatest value
+    public String greatestCard(Card p, Card c) {
+        if (p.getPoint() > c.getPoint()) {
+            player.addPoints(2);
+            return "Your Card Wins!";
+        }
+        else if (c.getPoint() > p.getPoint()) {
+            computer.addPoints(2);
+            return "The Computer's Card Wins!";
+        }
+        // if it's a tie
+        return "It's a tie!\n\nWAR:";
+    }
+
+    public void checkWon() {
+        // if player won announce they won
+        if (player.getPoints() > computer.getPoints()) {
+            System.out.println("YOU WON! CONGRATS!!!");
+            return;
+        }
+        // if computer won, announce they won
+        else if (computer.getPoints() > player.getPoints()) {
+            System.out.println("The Computer Won! You Lost!");
+            return;
+        }
+        // if it was a tie, announce the tie and play another round
+        System.out.println("It was a TIE! Play again!");
+        playGame();
+    }
     public static void main(String[] args) {
         Game g = new Game();
         g.playGame();
