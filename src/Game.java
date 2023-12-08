@@ -8,8 +8,12 @@ public class Game {
     private Deck deck;
 //    // player's name
     private String name;
+
+    Scanner scan = new Scanner(System.in);
+
     // constructor
     public Game() {
+        printInstructions();
         // creates a deck with cards that have ranks, suits, and points
         String[] ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         String[] suits = {"Hearts", "Clubs", "Spades", "Diamonds"};
@@ -35,8 +39,6 @@ public class Game {
     }
 
     public void playGame() {
-        printInstructions();
-//      System.out.println("Let's Go! " + name + ", draw a card. (type 'd')");
         Scanner scan = new Scanner(System.in);
         // while there are things left in the deck
         while (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
@@ -63,14 +65,17 @@ public class Game {
     public String greatestCard(Card p, Card c) {
         if (p.getPoint() > c.getPoint()) {
             player.addPoints(2);
-            return "Your Card Wins!";
+            return "Your Card Wins!\n";
         }
         else if (c.getPoint() > p.getPoint()) {
             computer.addPoints(2);
-            return "The Computer's Card Wins!";
+            return "The Computer's Card Wins!\n";
         }
         // if it's a tie
-        return "It's a tie!\n\nWAR:";
+        else {
+            cardTie();
+        }
+        return "";
     }
 
     public void checkWon() {
@@ -85,9 +90,26 @@ public class Game {
             return;
         }
         // if it was a tie, announce the tie and play another round
-        System.out.println("It was a TIE! Play again!");
+        System.out.println("It was a TIE!");
         playGame();
     }
+
+    // deals with ties between cards
+    public void cardTie() {
+        Scanner scan = new Scanner(System.in);
+        Card p = this.player.getHand().remove(0);
+        Card c = this.computer.getHand().remove(0);
+        System.out.println("IT's A TIE! Pick one card out of the three: (type 1, 2, or 3)\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
+        String w = scan.nextLine();
+        if (w.equals("1") || w.equals("2") || w.equals("3")) {
+            System.out.println("You drew: " + p);
+        }
+        System.out.println("The computer drew: " + c);
+        System.out.println(greatestCard(p, c));
+
+        playGame();
+    }
+
     public static void main(String[] args) {
         Game g = new Game();
         g.playGame();
