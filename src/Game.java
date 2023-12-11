@@ -1,6 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Game {
+    // Can write a class containing instance variables, constructors, and methods, using access modifiers (private vs public) appropriately.
     // instance variables
     private Player player;
     private Player computer;
@@ -14,6 +15,7 @@ public class Game {
         // prints instructions
         printInstructions();
         // creates a deck with cards that have ranks, suits, and points
+        // Can declare and initialize Arrays, ArrayLists, and 2D Arrays.
         String[] ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
         String[] suits = {"Hearts", "Clubs", "Spades", "Diamonds"};
         int[] point = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
@@ -22,6 +24,7 @@ public class Game {
         // shuffles deck
         deck.shuffle();
         // asks for user's name
+        // Read in user input and save it to an appropriate variable using Scanners and .nextLine/Int/Double
         System.out.println("What is your name?");
         Scanner scan = new Scanner(System.in);
         name = scan.nextLine();
@@ -29,12 +32,16 @@ public class Game {
         this.player = new Player(name);
         this.computer = new Player("computer");
         // adds cards to deck
+        // Can use if, while, and for.
+        // Can write algorithms to traverse and modify Arrays and ArrayLists.
+        // Can use ArrayList methods.
         for(int i = 0; i < 26; i++) {
             this.player.addCard(this.deck.deal());
             this.computer.addCard(this.deck.deal());
         }
     }
 
+    // Understands how the keyword static affects methods and variables.
     public static void printInstructions() {
         System.out.println("INSTRUCTIONS FOR THE GAME OF WAR: \nHalf the deck is given to the player, the other half is given to the computer and just as the cards would be faced down in a normal\n" +
                                                                 "game of war, you will not be able to know the rank or suit of your cards. Flip your top card over and the computer will do the same.\n" +
@@ -45,11 +52,14 @@ public class Game {
 
     public void playGame() {
         // while there are still cards left in the player and computer's hand
+        // Can use if, while, and for.
+        // Can use ArrayList methods.
         while (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
             compareCards();
         }
         // if there is nothing left in the hands
         checkWon();
+        // Can use if, while, and for.
         if (isOver) {
             return;
         }
@@ -60,6 +70,8 @@ public class Game {
     public void compareCards() {
         System.out.println(name + ", draw a card. (type 'd')");
         // when the user draws
+        // Can use if, while, and for.
+        // Can use ArrayList methods.
         if (!scan.nextLine().isEmpty()) {
             // reads player's draw
             Card pCard = this.player.getHand().remove(0);
@@ -77,6 +89,8 @@ public class Game {
 
     // returns the card with the greatest value
     public String greatestCard(Card p, Card c) {
+        // Can use if, while, and for.
+        // Can write algorithms to traverse and modify Arrays and ArrayLists.
         if (p.getPoint() > c.getPoint()) {
             player.addPoints(2);
             return "YOUR CARD WINS!";
@@ -99,6 +113,8 @@ public class Game {
         Card p = this.player.getHand().remove(0);
         Card c = this.computer.getHand().remove(0);
         // if the user picks one of the cards
+        // Understand how to use nesting to embed loops and conditionals inside of other loops and conditionals.
+        // Can use if, while, and for.
         if (!scan.nextLine().isEmpty()) {
             // check to see if it is a tie in a tie
             if (p.getPoint() == c.getPoint()) {
@@ -125,6 +141,7 @@ public class Game {
             System.out.println("THE COMPUTER'S CARD WINS!");
         }
 
+        // Understand how to use nesting to embed loops and conditionals inside of other loops and conditionals.
         for (int i = 0; i < 3; i++) {
             // while there are cards left in the hand
             if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {

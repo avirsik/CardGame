@@ -2,6 +2,7 @@ import java.util.ArrayList;
 public class Player {
     // instance variables
     private String name;
+    // Can declare and initialize Arrays, ArrayLists, and 2D Arrays.
     private ArrayList<Card> hand;
     private int points;
     // constructors
