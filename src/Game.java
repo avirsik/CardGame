@@ -9,9 +9,11 @@ public class Game {
     private String name;
     private Scanner scan = new Scanner(System.in);
     private boolean isOver = false;
+    private GameViewer gv;
 
     // constructor
     public Game() {
+        gv = new GameViewer(this);
         // prints instructions
         printInstructions();
         // creates a deck with cards that have ranks, suits, and points
