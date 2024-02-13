@@ -8,16 +8,17 @@ import java.awt.*;
  */
 
 public class GameViewer extends JFrame {
-    private Game g;
+    private Game game;
     private Image[] cards;
     private Image background;
     private final int WINDOW_WIDTH = 1000;
     private final int WINDOW_HEIGHT = 800;
-    private static final int INSTRUCT_Y_START = 325;
+    private static final int INSTRUCT_Y_START = 280;
+    private Image backCard;
 
     // Constructor that sets up the window and creates the images
-    public GameViewer(Game g) {
-        this.g = g;
+    public GameViewer(Game game) {
+        this.game = game;
 
         this.cards = new Image[52];
         cards[0] = new ImageIcon("Resources/1.png").getImage();
@@ -38,7 +39,7 @@ public class GameViewer extends JFrame {
         g.setColor(Color.black);
         g.setFont(new Font("Serif", Font.ITALIC + Font.BOLD, 50));
         g.drawString("Welcome to WAR!", 300, 120);
-        g.drawString("Instructions: ", 75, 250);
+        g.drawString("Rules of the Game: ", 75, 225);
 
         g.setFont(new Font("Serif", Font.BOLD, 30));
         g.drawString("Half the deck is given to the player, the other half is given to the", 75, INSTRUCT_Y_START);
@@ -51,8 +52,27 @@ public class GameViewer extends JFrame {
         g.drawString("you and the computer will randomly choose 1 out of 3 cards with", 75, INSTRUCT_Y_START+210);
         g.drawString("unknown rank and suit. Whoever has the higher card gets to keep all", 75, INSTRUCT_Y_START+240);
         g.drawString("8 cards.", 75, INSTRUCT_Y_START+270);
+        // Tells user to type in their name
+        g.drawString("WHAT IS YOUR NAME", 325, 670);
+        // If the user typed in a name repaint window background
+//        // could also create a state over, in game, instructions...
+//        if (game.getState().equals("draw")) {
+            gameScreen(g);
+//        }
+    }
 
-        g.drawString("PRESS 'C' TO CONTINUE", 350, 670);
-
+    public void gameScreen(Graphics g) {
+        // Redraw background
+        g.drawImage(background, 0, 0, this);
+        g.drawString("Draw a card (press d)", 300, 120);
+//        if (game.getState().equals("play")) {
+            // Redraw background
+            g.drawImage(background, 0, 0, this);
+            // HOW DO I PRINT OUT THE SAME CARD THAT MY MATH.RANDOM GAVE ME?
+            g.drawImage(cards[0], 450, 50, 75, 125, this);
+//          game.getPCard();
+            backCard = new ImageIcon("Resources/back.png").getImage();
+            g.drawImage(backCard, 450, 50, this);
+//        }
     }
 }

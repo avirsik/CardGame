@@ -10,10 +10,15 @@ public class Game {
     private Scanner scan = new Scanner(System.in);
     private boolean isOver = false;
     private GameViewer gv;
+    // State of the game
+    private String state;
+    private Card pCard;
+    private Card cCard;
 
     // constructor
     public Game() {
         gv = new GameViewer(this);
+        state = "instructions";
         // prints instructions
         printInstructions();
         // creates a deck with cards that have ranks, suits, and points
@@ -30,6 +35,7 @@ public class Game {
         System.out.println("What is your name?");
         Scanner scan = new Scanner(System.in);
         name = scan.nextLine();
+        state = "draw";
         // initialize players + computer
         this.player = new Player(name);
         this.computer = new Player("computer");
@@ -41,6 +47,23 @@ public class Game {
             this.player.addCard(this.deck.deal());
             this.computer.addCard(this.deck.deal());
         }
+    }
+
+    // could add # 1 or 2 depending on if it was computer or player we needed to know
+    public Player getPlayer() {
+        return player;
+    }
+
+    public String getState() {
+        return this.state;
+    }
+
+    public Card getPCard() {
+        return this.pCard;
+    }
+
+    public Card getCCard() {
+        return this.cCard;
     }
 
     // Understands how the keyword static affects methods and variables.
@@ -75,11 +98,12 @@ public class Game {
         // Can use if, while, and for.
         // Can use ArrayList methods.
         if (!scan.nextLine().isEmpty()) {
+            state = "play";
             // reads player's draw
-            Card pCard = this.player.getHand().remove(0);
+            pCard = this.player.getHand().remove(0);
             System.out.println("You drew: " + pCard);
             // reads computer's draw
-            Card cCard = this.computer.getHand().remove(0);
+            cCard = this.computer.getHand().remove(0);
             System.out.println("The computer drew: " + cCard);
             // prints out the greatest card
             System.out.println(greatestCard(pCard, cCard));
@@ -118,7 +142,7 @@ public class Game {
         // Understand how to use nesting to embed loops and conditionals inside of other loops and conditionals.
         // Can use if, while, and for.
         if (!scan.nextLine().isEmpty()) {
-            // check to see if it is a tie in a tie
+            // Check to see if it is a tie in a tie
             if (p.getPoint() == c.getPoint()) {
                 player.addPoints(4);
                 computer.addPoints(4);

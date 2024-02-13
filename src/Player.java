@@ -5,7 +5,6 @@ public class Player {
     // Can declare and initialize Arrays, ArrayLists, and 2D Arrays.
     private ArrayList<Card> hand;
     private int points;
-    // constructors
     public Player(String name) {
         this.name = name;
         this.points = 0;
