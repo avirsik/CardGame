@@ -47,6 +47,7 @@ public class Game {
             this.player.addCard(this.deck.deal());
             this.computer.addCard(this.deck.deal());
         }
+        gv.repaint();
     }
 
     // could add # 1 or 2 depending on if it was computer or player we needed to know

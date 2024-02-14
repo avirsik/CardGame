@@ -21,7 +21,10 @@ public class GameViewer extends JFrame {
         this.game = game;
 
         this.cards = new Image[52];
-        cards[0] = new ImageIcon("Resources/1.png").getImage();
+        for (int i = 0; i < 52; i++)
+        {
+            cards[i] = new ImageIcon("Resources/1.png").getImage();
+        }
 
         this.background = new ImageIcon("Resources/background.png").getImage();
 
@@ -55,24 +58,29 @@ public class GameViewer extends JFrame {
         // Tells user to type in their name
         g.drawString("WHAT IS YOUR NAME", 325, 670);
         // If the user typed in a name repaint window background
-//        // could also create a state over, in game, instructions...
-//        if (game.getState().equals("draw")) {
+        // could also create a state over, in game, instructions...i
+        if (game.getState().equals("draw")) {
             gameScreen(g);
-//        }
+        }
     }
 
     public void gameScreen(Graphics g) {
         // Redraw background
         g.drawImage(background, 0, 0, this);
         g.drawString("Draw a card (press d)", 300, 120);
-//        if (game.getState().equals("play")) {
+        if (game.getState().equals("play")) {
             // Redraw background
             g.drawImage(background, 0, 0, this);
-            // HOW DO I PRINT OUT THE SAME CARD THAT MY MATH.RANDOM GAVE ME?
-            g.drawImage(cards[0], 450, 50, 75, 125, this);
-//          game.getPCard();
+            // Create back of card image
             backCard = new ImageIcon("Resources/back.png").getImage();
-            g.drawImage(backCard, 450, 50, this);
-//        }
+            // Prints back of cards
+            g.drawImage(backCard, 460, 50, 75, 125, this);
+            g.drawImage(backCard, 460, 600, 75, 125, this);
+            // HOW DO I PRINT OUT THE SAME CARD THAT MY MATH.RANDOM GAVE ME?
+            // Prints the front of both cards
+            g.drawImage(cards[0], 460, 175, 75, 125, this);
+            g.drawImage(cards[1], 460, 475, 75, 125, this);
+//          game.getPCard();
+        }
     }
 }
