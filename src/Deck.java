@@ -1,49 +1,47 @@
+import javax.swing.*;
+import java.awt.*;
 import java.util.ArrayList;
 public class Deck {
-    // instance variables
-    // Can declare and initialize Arrays, ArrayLists, and 2D Arrays
     private ArrayList<Card> cards;
     private int cardsLeft;
-    // constructor
-    // Can declare and initialize Arrays, ArrayLists, and 2D Arrays.
+    private GameViewer gv;
 
+    // Constructor initializes cards, creates the specified cards and adds them to the list, and sets cardsLeft to the number of cards in
+    // the deck
     public Deck(String[] ranks, String[] suits, int[] points) {
         this.cards = new ArrayList<Card>();
         this.cardsLeft = 0;
-        // Understand how to use nesting to embed loops and conditionals inside of other loops and conditionals
-        // Can use if, while, and for.
         for (int i = 0; i < ranks.length; i++) {
             for (int j = 0; j < suits.length; j++) {
-                cards.add(new Card(ranks[i], suits[j], points[i]));
                 cardsLeft++;
+                Image image = new ImageIcon("Resources/" + cardsLeft + ".png").getImage();
+                cards.add(new Card(ranks[i], suits[j], points[i], image, gv));
+
             }
         }
     }
+    // Returns true when there are no cards left in the deck
     public boolean isEmpty() {
-        // Can use if, while, and for.
         if (cardsLeft == 0) {
             return true;
         }
         return false;
     }
-
+    // Returns the number of cards left to be dealt
     public int getCardsLeft() {
         return this.cardsLeft;
     }
-
+    // When there are still cards left in the deck, return the last card
     public Card deal() {
-        // Can use if, while, and for.
         if (cards.isEmpty()) {
             return null;
         }
         cardsLeft--;
         return cards.get(cardsLeft);
     }
-
+    // Reorders the cards in the ArrayList to create a shuffled deck
     public void shuffle() {
-        // Can use if, while, and for.
         for (int i = cards.size() - 1; i > 0; i--) {
-            // Can use Math class, especially Math.random().
             int r = (int)(Math.random()*i);
             Card copy = cards.get(i);
             cards.set(i, cards.get(r));

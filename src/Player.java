@@ -1,10 +1,10 @@
 import java.util.ArrayList;
 public class Player {
-    // instance variables
+    // Instance variables
     private String name;
-    // Can declare and initialize Arrays, ArrayLists, and 2D Arrays.
     private ArrayList<Card> hand;
     private int points;
+    // Constructors
     public Player(String name) {
         this.name = name;
         this.points = 0;
@@ -15,7 +15,7 @@ public class Player {
         this.hand = hand;
         this.points = 0;
     }
-    // getter methods for instance variables
+    // Getter methods
     public String getName() {
         return this.name;
     }

@@ -1,8 +1,7 @@
 import java.util.Scanner;
 import java.util.ArrayList;
 public class Game {
-    // Can write a class containing instance variables, constructors, and methods, using access modifiers (private vs public) appropriately.
-    // instance variables
+    // Instance variables
     private Player player;
     private Player computer;
     private Deck deck;
@@ -14,47 +13,40 @@ public class Game {
     private String state;
     private Card pCard;
     private Card cCard;
+    private int roundNum = -1;
+    private String winner;
 
-    // constructor
+    // Constructor
     public Game() {
         gv = new GameViewer(this);
         state = "instructions";
-        // prints instructions
+        // Prints instructions
         printInstructions();
-        // creates a deck with cards that have ranks, suits, and points
-        // Can declare and initialize Arrays, ArrayLists, and 2D Arrays.
+        // Creates a deck with cards that have ranks, suits, and points
         String[] ranks = new String[]{"A", "2", "3", "4", "5", "6", "7", "8", "9", "10", "J", "Q", "K"};
-        String[] suits = {"Hearts", "Clubs", "Spades", "Diamonds"};
+        String[] suits = {"Spades", "Hearts",  "Diamonds", "Clubs"};
         int[] point = {1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14};
-        // initialize deck class
+        // Initialize deck class
         this.deck = new Deck (ranks, suits, point);
-        // shuffles deck
+        // Shuffles deck
         deck.shuffle();
-        // asks for user's name
+        // Asks for user's name
         // Read in user input and save it to an appropriate variable using Scanners and .nextLine/Int/Double
         System.out.println("What is your name?");
         Scanner scan = new Scanner(System.in);
         name = scan.nextLine();
         state = "draw";
-        // initialize players + computer
+        // Initialize players + computer
         this.player = new Player(name);
         this.computer = new Player("computer");
-        // adds cards to deck
-        // Can use if, while, and for.
-        // Can write algorithms to traverse and modify Arrays and ArrayLists.
-        // Can use ArrayList methods.
-        for(int i = 0; i < 26; i++) {
+        // Adds cards to deck
+        for(int i = 0; i < 3; i++) {
             this.player.addCard(this.deck.deal());
             this.computer.addCard(this.deck.deal());
         }
         gv.repaint();
     }
-
-    // could add # 1 or 2 depending on if it was computer or player we needed to know
-    public Player getPlayer() {
-        return player;
-    }
-
+    // Getter methods
     public String getState() {
         return this.state;
     }
@@ -66,8 +58,19 @@ public class Game {
     public Card getCCard() {
         return this.cCard;
     }
-
-    // Understands how the keyword static affects methods and variables.
+    public String getRoundNum() {
+        return "" + roundNum;
+    }
+    public String getWinner() {
+        return winner;
+    }
+    public Player getPlayer() {
+        return this.player;
+    }
+    public boolean getIsOver() {
+        return isOver;
+    }
+    // Prints instructions
     public static void printInstructions() {
         System.out.println("INSTRUCTIONS FOR THE GAME OF WAR: \nHalf the deck is given to the player, the other half is given to the computer and just as the cards would be faced down in a normal\n" +
                                                                 "game of war, you will not be able to know the rank or suit of your cards. Flip your top card over and the computer will do the same.\n" +
@@ -77,47 +80,57 @@ public class Game {
     }
 
     public void playGame() {
-        // while there are still cards left in the player and computer's hand
-        // Can use if, while, and for.
-        // Can use ArrayList methods.
+        //
         while (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
             compareCards();
         }
-        // if there is nothing left in the hands
+        // Check if the game has been won by checking if there are no cards left in the hands
         checkWon();
-        // Can use if, while, and for.
         if (isOver) {
             return;
         }
         return;
     }
 
-    // compares the user's and computer's cards
+    // Compares the user's and computer's cards
     public void compareCards() {
         System.out.println(name + ", draw a card. (type 'd')");
-        // when the user draws
-        // Can use if, while, and for.
-        // Can use ArrayList methods.
+        roundNum++;
+        // When the user draws a card
         if (!scan.nextLine().isEmpty()) {
             state = "play";
-            // reads player's draw
+            gv.repaint();
+            // Reads player's draw
             pCard = this.player.getHand().remove(0);
             System.out.println("You drew: " + pCard);
-            // reads computer's draw
+            // Reads computer's draw
             cCard = this.computer.getHand().remove(0);
             System.out.println("The computer drew: " + cCard);
-            // prints out the greatest card
+            // Prints out the greatest card
             System.out.println(greatestCard(pCard, cCard));
-            // read player + computer's points
+            // Read player + computer's points
             System.out.println(name + "'s score: " + player.getPoints());
             System.out.println("computer's score: " + computer.getPoints() + "\n");
+////            state = "roundIsWon";
+//            // Tells user to reveal who won
+//            System.out.println("Press 'c' to continue!");
+//            if (!scan.nextLine().isEmpty()) {
+//                if (greatestCard(pCard, cCard).equals("YOUR CARD WINS!")) {
+//                    state = "player wins";
+//                }
+//                else if (greatestCard(pCard, cCard).equals("YOUR CARD WINS!")) {
+//                    state = "computer wins";
+//                }
+//                else {
+//                    state = "tie";
+//                }
+//                return;
+//            }
         }
     }
 
-    // returns the card with the greatest value
+    // Returns the card with the greatest value
     public String greatestCard(Card p, Card c) {
-        // Can use if, while, and for.
-        // Can write algorithms to traverse and modify Arrays and ArrayLists.
         if (p.getPoint() > c.getPoint()) {
             player.addPoints(2);
             return "YOUR CARD WINS!";
@@ -126,22 +139,20 @@ public class Game {
             computer.addPoints(2);
             return "THE COMPUTER'S CARD WINS!";
         }
-        // if it's a tie
+        // If it's a tie
         else {
             cardTie();
         }
-        return"";
+        return "";
     }
 
-    // deals with ties between cards
+    // Deals with ties between cards
     public void cardTie() {
-        // tells the user to type 1, 2, or 3 and only accepts those replies
+        // Tells the user to type 1, 2, or 3 and only accepts those replies
         System.out.println("IT's A TIE! Pick one card out of the three: (type 1, 2, or 3)\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
         Card p = this.player.getHand().remove(0);
         Card c = this.computer.getHand().remove(0);
-        // if the user picks one of the cards
-        // Understand how to use nesting to embed loops and conditionals inside of other loops and conditionals.
-        // Can use if, while, and for.
+        // If the user picks one of the cards
         if (!scan.nextLine().isEmpty()) {
             // Check to see if it is a tie in a tie
             if (p.getPoint() == c.getPoint()) {
@@ -150,15 +161,15 @@ public class Game {
                 System.out.println("IT'S A TIE IN A TIE! YOU AND THE COMPUTER BOTH GET 4 POINTS!");
                 return;
             }
-            // reads the player's card
+            // Reads the player's card
             System.out.println("You drew: " + p);
-            // reads the computer's card
+            // Reads the computer's card
             System.out.println("The computer drew: " + c);
         }
         else {
             System.out.println("Pick one card out of the three: (type '1', '2', or '3')\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
         }
-        // adds correct amount of points
+        // Adds correct amount of points
         if (p.getPoint() > c.getPoint()) {
             player.addPoints(8);
             System.out.println("YOUR CARD WINS!");
@@ -168,36 +179,38 @@ public class Game {
             System.out.println("THE COMPUTER'S CARD WINS!");
         }
 
-        // Understand how to use nesting to embed loops and conditionals inside of other loops and conditionals.
         for (int i = 0; i < 3; i++) {
-            // while there are cards left in the hand
+            // While there are cards left in the hand
             if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
                 // remove 3 more cards for a total of 8 cards removed
                 this.player.getHand().remove(0);
                 this.computer.getHand().remove(0);
             }
-            // if there are no cards left in the hand
+            // If there are no cards left in the hand
             else {
                 checkWon();
             }
         }
     }
 
-    // checks to see if someone has won the entire game
+    // Checks to see if someone has won the entire game
     public void checkWon() {
-        // if player won announce they won
+        // If player won announce they won
         if (player.getPoints() > computer.getPoints()) {
             System.out.println("YOU WON! CONGRATS!!!");
             isOver = true;
+            winner = "YOU WON! CONGRATS!!!";
             return;
         }
-        // if computer won, announce they won
+        // If computer won, announce they won
         else if (computer.getPoints() > player.getPoints()) {
             System.out.println("THE COMPUTER WON! YOU LOST!\nGAME OVER");
             isOver = true;
+            winner = "THE COMPUTER WON! YOU LOST! GAME OVER";
             return;
         }
-        // if it was a tie, announce the tie and play another round
+        // If it was a tie, announce the tie
+        winner = "IT WAS A TIE!";
         System.out.println("It was a TIE!");
     }
 

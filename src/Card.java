@@ -1,15 +1,22 @@
+import javax.swing.*;
+import java.awt.*;
+
 public class Card {
-    // instance variables
+    // Instance variables
     private String rank;
     private String suit;
     private int point;
-    // constructor
-    public Card(String rank, String suit, int point){
+    private Image image;
+    private GameViewer gv;
+    // Constructor
+    public Card(String rank, String suit, int point, Image image, GameViewer gv) {
         this.rank = rank;
         this.suit = suit;
         this.point = point;
+        this.image = image;
+        this.gv = gv;
     }
-    // getter and setter methods
+    // Getter and setter methods
     public String getRank() {
         return this.rank;
     }
@@ -28,8 +35,11 @@ public class Card {
     public void setPoint(int point) {
         this.point = point;
     }
-    // toString method
     public String toString() {
         return rank + " of " + suit;
+    }
+    // Draws itself
+    public void draw(Graphics g, int x, int y) {
+        g.drawImage(image, x, y, 75, 125, gv);
     }
 }
