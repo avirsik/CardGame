@@ -16,6 +16,7 @@ public class GameViewer extends JFrame {
     private static final int INSTRUCT_Y_START = 375;
     private Image backCard;
     private Image instructionsBackground;
+    private Image winningScreen;
 
     // Constructor that sets up the window and creates the images
     public GameViewer(Game game) {
@@ -29,6 +30,7 @@ public class GameViewer extends JFrame {
 
         this.background = new ImageIcon("Resources/background.png").getImage();
         this.instructionsBackground = new ImageIcon("Resources/instructionsBackground.png").getImage();
+        this.winningScreen = new ImageIcon("Resources/winningScreen.png").getImage();
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Game Viewer");
@@ -97,7 +99,7 @@ public class GameViewer extends JFrame {
             // Prints the front of both cards
             game.getCCard().draw(g, 460, 225);
             game.getPCard().draw(g, 460, 425);
-            // Prints out the message that says who's card it is
+            // Prints out the message that says whose card it is
             g.drawString("Computer's Card:", 150, 300);
             g.drawString("Your Card:", 150, 500);
             // Says who won
@@ -106,14 +108,14 @@ public class GameViewer extends JFrame {
             g.setFont(new Font("Serif", Font.BOLD, 40));
             g.drawString("Round: " + game.getRoundNum(), 825, 75);
             // Displays each player's points
-            g.drawString(("Computer's Score: " + game.getPlayer().getPoints()), 500, 500);
-            g.drawString(("Your Score: " + game.getPlayer().getPoints()), 400, 400);
+            g.setFont(new Font("Serif", Font.BOLD, 20));
+            g.drawString(("Score: " + game.getPlayer().getPoints()), 170, 325);
+            g.drawString(("Score: " + game.getPlayer().getPoints()), 170, 525);
         }
-        // If the player won
+        // If the game has been won, prints out winning screen for whoever won
         if (game.getIsOver() == true) {
-            // Prints out who won
+            g.drawImage(winningScreen, 0, 0, this);
             g.setFont(new Font("Serif", Font.BOLD, 40));
-            g.drawString(game.getWinner(), 450, 600);
             g.drawString(game.getWinner(), 450, 600);
         }
     }
