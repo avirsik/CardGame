@@ -40,7 +40,7 @@ public class Game {
         this.player = new Player(name);
         this.computer = new Player("computer");
         // Adds cards to deck
-        for(int i = 0; i < 3; i++) {
+        for(int i = 0; i < 26; i++) {
             this.player.addCard(this.deck.deal());
             this.computer.addCard(this.deck.deal());
         }
@@ -111,21 +111,6 @@ public class Game {
             // Read player + computer's points
             System.out.println(name + "'s score: " + player.getPoints());
             System.out.println("computer's score: " + computer.getPoints() + "\n");
-////            state = "roundIsWon";
-//            // Tells user to reveal who won
-//            System.out.println("Press 'c' to continue!");
-//            if (!scan.nextLine().isEmpty()) {
-//                if (greatestCard(pCard, cCard).equals("YOUR CARD WINS!")) {
-//                    state = "player wins";
-//                }
-//                else if (greatestCard(pCard, cCard).equals("YOUR CARD WINS!")) {
-//                    state = "computer wins";
-//                }
-//                else {
-//                    state = "tie";
-//                }
-//                return;
-//            }
         }
     }
 
@@ -169,6 +154,7 @@ public class Game {
         else {
             System.out.println("Pick one card out of the three: (type '1', '2', or '3')\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
         }
+
         // Adds correct amount of points
         if (p.getPoint() > c.getPoint()) {
             player.addPoints(8);
@@ -178,18 +164,18 @@ public class Game {
             computer.addPoints(8);
             System.out.println("THE COMPUTER'S CARD WINS!");
         }
-
-        for (int i = 0; i < 3; i++) {
+// START HERE FIGURE OUT WHY I WAS LOOPING THREE TIMES AND TRY TO FIX THIS. MAYBE CREATE IF STATMENT FOR IF IT RUNS OUT OF CARDS
+//        for (int i = 0; i < 3; i++) {
             // While there are cards left in the hand
             if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
-                // remove 3 more cards for a total of 8 cards removed
+                // Remove 3 more cards for a total of 8 cards removed
                 this.player.getHand().remove(0);
                 this.computer.getHand().remove(0);
             }
             // If there are no cards left in the hand
             else {
                 checkWon();
-            }
+//            }
         }
     }
 

@@ -16,7 +16,9 @@ public class GameViewer extends JFrame {
     private static final int INSTRUCT_Y_START = 375;
     private Image backCard;
     private Image instructionsBackground;
-    private Image winningScreen;
+    private Image computerWonBackground;
+    private Image playerWonBackground;
+    private Image winningBackground;
 
     // Constructor that sets up the window and creates the images
     public GameViewer(Game game) {
@@ -30,7 +32,9 @@ public class GameViewer extends JFrame {
 
         this.background = new ImageIcon("Resources/background.png").getImage();
         this.instructionsBackground = new ImageIcon("Resources/instructionsBackground.png").getImage();
-        this.winningScreen = new ImageIcon("Resources/winningScreen.png").getImage();
+        this.computerWonBackground = new ImageIcon("Resources/computerWonBackground.png").getImage();
+        this.playerWonBackground = new ImageIcon("Resources/playerWonBackground.png").getImage();
+        this.winningBackground = new ImageIcon("Resources/winningBackground.png").getImage();
 
         this.setDefaultCloseOperation(EXIT_ON_CLOSE);
         this.setTitle("Game Viewer");
@@ -114,9 +118,17 @@ public class GameViewer extends JFrame {
         }
         // If the game has been won, prints out winning screen for whoever won
         if (game.getIsOver() == true) {
-            g.drawImage(winningScreen, 0, 0, this);
-            g.setFont(new Font("Serif", Font.BOLD, 40));
-            g.drawString(game.getWinner(), 450, 600);
+            if (game.getWinner().equals("YOU WON! CONGRATS!!!")) {
+                g.drawImage(playerWonBackground, 0, 0, this);
+            }
+            else if (game.getWinner().equals("THE COMPUTER WON! YOU LOST! GAME OVER")) {
+                g.drawImage(computerWonBackground, 0, 0, this);
+            }
+            else {
+                g.drawImage(winningBackground, 0, 0, this);
+            }
+//            g.setFont(new Font("Serif", Font.BOLD, 40));
+//            g.drawString(game.getWinner(), 200, 200);
         }
     }
 }
