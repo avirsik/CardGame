@@ -18,10 +18,13 @@ public class GameViewer extends JFrame {
     private Image computerWonBackground;
     private Image playerWonBackground;
     private Image winningBackground;
-    // Width and height values used
+    // Width, height, x, and y coordinates values used
     private final int WINDOW_WIDTH = 1000;
     private final int WINDOW_HEIGHT = 800;
     private static final int INSTRUCT_Y_START = 375;
+    private static final int X_START = 460;
+    private static final int X_STRING = 150;
+    private static final int CARD_HEIGHT = 125;
 
     // Constructor that sets up the window and creates the images
     public GameViewer(Game game) {
@@ -92,14 +95,14 @@ public class GameViewer extends JFrame {
             g.drawImage(background, 0, 0, this);
             // Draws back of card image
             backCard = new ImageIcon("Resources/back.png").getImage();
-            g.drawImage(backCard, 460, 50, 75, 125, this);
-            g.drawImage(backCard, 460, 600, 75, 125, this);
+            g.drawImage(backCard, X_START, 50, 75, CARD_HEIGHT, this);
+            g.drawImage(backCard, X_START, 600, 75, CARD_HEIGHT, this);
             // Prints the front of both cards
-            game.getCCard().draw(g, 460, 225);
-            game.getPCard().draw(g, 460, 425);
+            game.getCCard().draw(g, X_START, 225);
+            game.getPCard().draw(g, X_START, 425);
             // Prints out the message that says whose card it is
-            g.drawString("Computer's Card:", 150, 300);
-            g.drawString("Your Card:", 150, 500);
+            g.drawString("Computer's Card:", X_STRING, 300);
+            g.drawString("Your Card:", X_STRING, 500);
             // Says who won that round
             g.drawString(game.greatestCard(game.getPCard(), game.getCCard()), 500, 400);
             // Displays round number
@@ -116,6 +119,7 @@ public class GameViewer extends JFrame {
             }
             else {
                 g.drawImage(winningBackground, 0, 0, this);
+                g.drawString("IT'S A TIE!", 350, 490);
             }
         }
     }
