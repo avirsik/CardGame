@@ -40,7 +40,7 @@ public class Game {
         this.player = new Player(name);
         this.computer = new Player("computer");
         // Adds cards to deck
-        for(int i = 0; i < 26; i++) {
+        for(int i = 0; i < 3; i++) {
             this.player.addCard(this.deck.deal());
             this.computer.addCard(this.deck.deal());
         }
@@ -116,18 +116,21 @@ public class Game {
 
     // Returns the card with the greatest value
     public String greatestCard(Card p, Card c) {
-        if (p.getPoint() > c.getPoint()) {
-            player.addPoints(2);
-            return "YOUR CARD WINS!";
-        }
-        else if (c.getPoint() > p.getPoint()) {
-            computer.addPoints(2);
-            return "THE COMPUTER'S CARD WINS!";
-        }
-        // If it's a tie
-        else {
+//        if (p.getPoint() > c.getPoint()) {
+//            player.addPoints(2);
+//            return "YOUR CARD WINS!";
+//        }
+//        else if (c.getPoint() > p.getPoint()) {
+//            computer.addPoints(2);
+//            return "THE COMPUTER'S CARD WINS!";
+//        }
+//        // If it's a tie
+//        else {
+            // DELETE THIS IS JUST TO TEST FOR A TIE PROBLEM 2/16 9:00
+            c.setPoint(10);
+            p.setPoint(10);
             cardTie();
-        }
+//        }
         return "";
     }
 
@@ -135,48 +138,50 @@ public class Game {
     public void cardTie() {
         // Tells the user to type 1, 2, or 3 and only accepts those replies
         System.out.println("IT's A TIE! Pick one card out of the three: (type 1, 2, or 3)\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
-        Card p = this.player.getHand().remove(0);
-        Card c = this.computer.getHand().remove(0);
-        // If the user picks one of the cards
+        // Keeps track of the cards that are being played
+        this.player.getHand().remove(0);
+        this.computer.getHand().remove(0);
+        Card pCard = this.player.getHand().remove(0);
+        Card cCard = this.computer.getHand().remove(0);
+        // If the user types something, checks to see if it is a tie in a tie - adds the correct number of points, writes statement
         if (!scan.nextLine().isEmpty()) {
-            // Check to see if it is a tie in a tie
-            if (p.getPoint() == c.getPoint()) {
+            if (pCard.getPoint() == cCard.getPoint()) {
                 player.addPoints(4);
                 computer.addPoints(4);
                 System.out.println("IT'S A TIE IN A TIE! YOU AND THE COMPUTER BOTH GET 4 POINTS!");
                 return;
             }
-            // Reads the player's card
-            System.out.println("You drew: " + p);
-            // Reads the computer's card
-            System.out.println("The computer drew: " + c);
-        }
-        else {
-            System.out.println("Pick one card out of the three: (type '1', '2', or '3')\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
-        }
+            // If it is not a tie in a tie, reads the player and computer's cards
+            System.out.println("You drew: " + pCard);
+            System.out.println("The computer drew: " + cCard);
 
-        // Adds correct amount of points
-        if (p.getPoint() > c.getPoint()) {
-            player.addPoints(8);
-            System.out.println("YOUR CARD WINS!");
-        }
-        else if (c.getPoint() > p.getPoint()) {
-            computer.addPoints(8);
-            System.out.println("THE COMPUTER'S CARD WINS!");
-        }
-// START HERE FIGURE OUT WHY I WAS LOOPING THREE TIMES AND TRY TO FIX THIS. MAYBE CREATE IF STATMENT FOR IF IT RUNS OUT OF CARDS
-//        for (int i = 0; i < 3; i++) {
-            // While there are cards left in the hand
-            if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
-                // Remove 3 more cards for a total of 8 cards removed
-                this.player.getHand().remove(0);
-                this.computer.getHand().remove(0);
+            // Adds correct amount of points
+            if (pCard.getPoint() > cCard.getPoint()) {
+                player.addPoints(8);
+                System.out.println("YOUR CARD WINS!");
             }
-            // If there are no cards left in the hand
-            else {
-                checkWon();
+            else if (cCard.getPoint() > pCard.getPoint()) {
+                computer.addPoints(8);
+                System.out.println("THE COMPUTER'S CARD WINS!");
+            }
+            // START HERE FIGURE OUT WHY I WAS LOOPING THREE TIMES AND TRY TO FIX THIS. MAYBE CREATE IF STATEMENT FOR IF IT RUNS OUT OF CARDS
+            //           for (int i = 0; i < 3; i++) {
+                // While there are cards left in the hand
+                if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
+                  // Remove 3 more cards for a total of 8 cards removed
+                  this.player.getHand().remove(0);
+                  this.computer.getHand().remove(0);
+                }
+                // If there are no cards left in the hand
+                else {
+                    checkWon();
+                }
 //            }
         }
+//        else {
+//            System.out.println("Pick one card out of the three: (type '1', '2', or '3')\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
+//        }
+
     }
 
     // Checks to see if someone has won the entire game
