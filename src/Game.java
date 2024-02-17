@@ -81,7 +81,7 @@ public class Game {
 
     public void playGame() {
         //
-        while (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
+        while (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty() && isOver == false) {
             compareCards();
         }
         // Check if the game has been won by checking if there are no cards left in the hands
@@ -127,8 +127,8 @@ public class Game {
 //        // If it's a tie
 //        else {
             // DELETE THIS IS JUST TO TEST FOR A TIE PROBLEM 2/16 9:00
-            c.setPoint(10);
-            p.setPoint(10);
+//            c.setPoint(10);
+//            p.setPoint(10);
             cardTie();
 //        }
         return "";
@@ -138,46 +138,54 @@ public class Game {
     public void cardTie() {
         // Tells the user to type 1, 2, or 3 and only accepts those replies
         System.out.println("IT's A TIE! Pick one card out of the three: (type 1, 2, or 3)\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
-        // Keeps track of the cards that are being played
-        this.player.getHand().remove(0);
-        this.computer.getHand().remove(0);
-        Card pCard = this.player.getHand().remove(0);
-        Card cCard = this.computer.getHand().remove(0);
-        // If the user types something, checks to see if it is a tie in a tie - adds the correct number of points, writes statement
-        if (!scan.nextLine().isEmpty()) {
-            if (pCard.getPoint() == cCard.getPoint()) {
-                player.addPoints(4);
-                computer.addPoints(4);
-                System.out.println("IT'S A TIE IN A TIE! YOU AND THE COMPUTER BOTH GET 4 POINTS!");
-                return;
-            }
-            // If it is not a tie in a tie, reads the player and computer's cards
-            System.out.println("You drew: " + pCard);
-            System.out.println("The computer drew: " + cCard);
+        // taking two more
+//        this.player.getHand().remove(0);
+//        this.computer.getHand().remove(0);
 
-            // Adds correct amount of points
-            if (pCard.getPoint() > cCard.getPoint()) {
-                player.addPoints(8);
-                System.out.println("YOUR CARD WINS!");
-            }
-            else if (cCard.getPoint() > pCard.getPoint()) {
-                computer.addPoints(8);
-                System.out.println("THE COMPUTER'S CARD WINS!");
-            }
-            // START HERE FIGURE OUT WHY I WAS LOOPING THREE TIMES AND TRY TO FIX THIS. MAYBE CREATE IF STATEMENT FOR IF IT RUNS OUT OF CARDS
-            //           for (int i = 0; i < 3; i++) {
-                // While there are cards left in the hand
-                if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
-                  // Remove 3 more cards for a total of 8 cards removed
-                  this.player.getHand().remove(0);
-                  this.computer.getHand().remove(0);
+        // If there are still cards left in the deck
+        // START HERE FIGURE OUT WHY I WAS LOOPING THREE TIMES AND TRY TO FIX THIS. MAYBE CREATE IF STATEMENT FOR IF IT RUNS OUT OF CARDS
+        //           for (int i = 0; i < 3; i++) {
+        // While there are cards left in the hand
+        if (!this.player.getHand().isEmpty() && !this.computer.getHand().isEmpty()) {
+            System.out.println("bo");
+            // Remove the next card in each deck to compare them
+            Card pCard = this.player.getHand().remove(0);
+            Card cCard = this.computer.getHand().remove(0);
+
+            // If the user types something, checks to see if it is a tie in a tie - adds the correct number of points, writes statement
+            if (!scan.nextLine().isEmpty()) {
+                System.out.println("hey");
+                if (pCard.getPoint() == cCard.getPoint()) {
+                    player.addPoints(4);
+                    computer.addPoints(4);
+                    System.out.println("IT'S A TIE IN A TIE! YOU AND THE COMPUTER BOTH GET 4 POINTS!");
+                    return;
                 }
-                // If there are no cards left in the hand
-                else {
-                    checkWon();
+                // If it is not a tie in a tie, reads the player and computer's cards
+                System.out.println("You drew: " + pCard);
+                System.out.println("The computer drew: " + cCard);
+
+                // Adds correct amount of points
+                if (pCard.getPoint() > cCard.getPoint()) {
+                    player.addPoints(8);
+                    System.out.println("YOUR CARD WINS!");
                 }
-//            }
+                else if (cCard.getPoint() > pCard.getPoint()) {
+                    computer.addPoints(8);
+                    System.out.println("THE COMPUTER'S CARD WINS!");
+                }
+            }
+            // Remove 3 more cards for a total of 8 cards removed
+//            this.player.getHand().remove(0);
+//            this.computer.getHand().remove(0);
         }
+        // If there are no cards left in the hand
+//        else {
+//            checkWon();
+//        }
+//            }
+
+
 //        else {
 //            System.out.println("Pick one card out of the three: (type '1', '2', or '3')\n\nMystery Card 1\nMystery Card 2\nMystery Card 3");
 //        }
