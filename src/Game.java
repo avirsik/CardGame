@@ -122,18 +122,12 @@ public class Game {
             computer.addPoints(2);
             return "THE COMPUTER'S CARD WINS!";
         }
-//         If the points are equal, it is a tie
+//         If the points are equal, it is a tie, add 4 points to each player's score
         else {
-            cardTie();
+            player.addPoints(4);
+            computer.addPoints(4);
+            return "IT's A TIE!";
         }
-        return "";
-    }
-
-    // Deals with ties between cards, adding 4 points to both players
-    public void cardTie() {
-        System.out.println("IT's A TIE! You and the computer both get 4 points!\n");
-        player.addPoints(4);
-        computer.addPoints(4);
     }
 
     // Checks to see if someone has won the entire game
